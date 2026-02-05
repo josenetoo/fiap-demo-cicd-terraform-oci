@@ -98,8 +98,8 @@ resource "oci_containerengine_node_pool" "main" {
 
   node_source_details {
     source_type             = "IMAGE"
-    # Usar imagem OKE compatível com o shape (Oracle Linux 8)
-    image_id                = local.oke_image_id
+    # Usar imagem configurada na variável
+    image_id                = var.oke_node_image_id
     boot_volume_size_in_gbs = 50
   }
 
@@ -117,23 +117,8 @@ resource "oci_containerengine_node_pool" "main" {
 }
 
 # -----------------------------------------------------
-# Data Source - Imagens OKE compatíveis
+# NOTA: A imagem OKE deve ser compatível com o shape
+# Para encontrar imagens OKE válidas:
+# OCI Console → Compute → Images → Filtrar por "OKE"
+# Ou usar: oci ce node-pool-options get --node-pool-option-id all
 # -----------------------------------------------------
-data "oci_core_images" "oke_images" {
-  compartment_id           = var.compartment_id
-  operating_system         = "Oracle Linux"
-  operating_system_version = "8"
-  shape                    = var.oke_node_shape
-  sort_by                  = "TIMECREATED"
-  sort_order               = "DESC"
-
-  filter {
-    name   = "display_name"
-    values = ["^.*OKE.*$"]
-    regex  = true
-  }
-}
-
-locals {
-  oke_image_id = data.oci_core_images.oke_images.images[0].id
-}

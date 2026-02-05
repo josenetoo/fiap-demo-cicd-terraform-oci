@@ -38,7 +38,7 @@ oke_subnet_db_cidr     = "10.10.30.0/24"     # Databases/outros (256 IPs)
 
 # --- OKE (Oracle Kubernetes Engine) ---
 oke_kubernetes_version = "v1.34.1"
-oke_node_shape         = "VM.Standard.E4.Flex"
+oke_node_shape         = "VM.Standard.E3.Flex"
 oke_node_ocpus         = 2
 oke_node_memory_gb     = 16
 oke_node_count         = 2
