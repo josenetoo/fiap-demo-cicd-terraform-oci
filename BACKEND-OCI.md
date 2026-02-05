@@ -208,20 +208,6 @@ terraform init -migrate-state
 
 ---
 
-## 🎓 Recomendação para Aula
-
-**Para demonstração/aula:**
-- Use **Local State** (sem backend configurado)
-- Mais simples e direto
-- Foco no Terraform, não na infraestrutura do state
-
-**Para ambiente produtivo:**
-- Use **Remote State** (OCI Object Storage)
-- Necessário para equipes
-- Essencial para pipelines CI/CD compartilhadas
-
----
-
 ## 🔗 Referências
 
 - [Terraform S3 Backend](https://www.terraform.io/docs/language/settings/backends/s3.html)
@@ -229,5 +215,3 @@ terraform init -migrate-state
 - [OCI Customer Secret Keys](https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm#Working2)
 
 ---
-
-**✅ Backend configurado!** Seu Terraform state agora está seguro e compartilhado no OCI Object Storage.
