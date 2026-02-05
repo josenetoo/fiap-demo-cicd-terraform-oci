@@ -143,73 +143,52 @@ variable "oke_subnet_db_cidr" {
   default     = "10.10.30.0/24"
 }
 
-# # -----------------------------------------------------
-# # OKE - Oracle Kubernetes Engine
-# # -----------------------------------------------------
-# variable "oke_kubernetes_version" {
-#   description = "Versão do Kubernetes para o OKE"
-#   type        = string
-#   default     = "v1.34.1"
-# }
-
-# variable "oke_node_shape" {
-#   description = "Shape dos nodes do OKE"
-#   type        = string
-#   default     = "VM.Standard.E4.Flex"
-# }
-
-# variable "oke_node_ocpus" {
-#   description = "Número de OCPUs por node"
-#   type        = number
-#   default     = 2
-# }
-
-# variable "oke_node_memory_gb" {
-#   description = "Memória em GB por node"
-#   type        = number
-#   default     = 16
-# }
-
-# variable "oke_node_count" {
-#   description = "Número de nodes no pool"
-#   type        = number
-#   default     = 2
-# }
-
-# variable "oke_node_image_id" {
-#   description = "OCID da imagem para os nodes OKE"
-#   type        = string
-# }
-
-# variable "oke_services_cidr" {
-#   description = "CIDR para Kubernetes Services (ClusterIP)"
-#   type        = string
-#   default     = "10.96.0.0/16"
-# }
-# Nota: oke_pods_cidr não é necessário com VCN Native Pod Networking
-# Os pods usam IPs da subnet oke_subnet_pods_cidr
-
-
 # -----------------------------------------------------
-# REDIS - OCI Cache with Redis
+# OKE - Oracle Kubernetes Engine
 # -----------------------------------------------------
-variable "redis_node_count" {
-  description = "Número de nodes do Redis cluster"
-  type        = number
-  default     = 1
+variable "oke_kubernetes_version" {
+  description = "Versão do Kubernetes para o OKE"
+  type        = string
+  default     = "v1.34.1"
 }
 
-variable "redis_node_memory_gb" {
-  description = "Memória em GB por node Redis"
+variable "oke_node_shape" {
+  description = "Shape dos nodes do OKE"
+  type        = string
+  default     = "VM.Standard.E4.Flex"
+}
+
+variable "oke_node_ocpus" {
+  description = "Número de OCPUs por node"
   type        = number
   default     = 2
 }
 
-variable "redis_version" {
-  description = "Versão do Redis"
-  type        = string
-  default     = "REDIS_7_0"
+variable "oke_node_memory_gb" {
+  description = "Memória em GB por node"
+  type        = number
+  default     = 16
 }
+
+variable "oke_node_count" {
+  description = "Número de nodes no pool"
+  type        = number
+  default     = 2
+}
+
+variable "oke_node_image_id" {
+  description = "OCID da imagem para os nodes OKE"
+  type        = string
+}
+
+variable "oke_services_cidr" {
+  description = "CIDR para Kubernetes Services (ClusterIP)"
+  type        = string
+  default     = "10.96.0.0/16"
+}
+Nota: oke_pods_cidr não é necessário com VCN Native Pod Networking
+Os pods usam IPs da subnet oke_subnet_pods_cidr
+
 
 # -----------------------------------------------------
 # NOSQL - OCI NoSQL Database (equivalente DynamoDB)
