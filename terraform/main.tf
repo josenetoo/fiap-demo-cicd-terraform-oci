@@ -17,7 +17,7 @@ module "vcn" {
   region         = var.region
   
   vcn_name      = "${var.project_name}-vcn"
-  vcn_dns_label = "${var.project_name}vcn"
+  vcn_dns_label = replace("${var.project_name}vcn", "-", "")
   vcn_cidrs     = ["10.0.0.0/16"]
   
   create_internet_gateway = true
