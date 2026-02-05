@@ -27,16 +27,18 @@ terraform {
     # Região do bucket (deve corresponder à região do bucket)
     region = "sa-vinhedo-1"
     
-    # Endpoint S3-compatible do OCI Object Storage
-    # Formato: https://<NAMESPACE>.compat.objectstorage.<REGION>.oraclecloud.com
-    # Substitua <NAMESPACE> pelo seu Object Storage Namespace
-    endpoint = "https://ax7pefxfpuix.compat.objectstorage.sa-vinhedo-1.oraclecloud.com"
+    # Endpoint S3-compatible do OCI Object Storage (novo formato)
+    endpoints = {
+      s3 = "https://ax7pefxfpuix.compat.objectstorage.sa-vinhedo-1.oraclecloud.com"
+    }
     
     # Configurações obrigatórias para OCI S3-compatible API
     skip_region_validation      = true
     skip_credentials_validation = true
     skip_metadata_api_check     = true
-    force_path_style            = true
+    skip_requesting_account_id  = true
+    skip_s3_checksum            = true
+    use_path_style              = true
   }
 }
 
