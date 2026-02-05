@@ -127,17 +127,28 @@ Menu OCI: ☰ → **Compute** → **Images** → Filtrar Oracle Linux → Copiar
 project_name = "fiap-demo-oci"
 environment  = "dev"
 
-# --- Rede ---
+# --- Rede Demo ---
 vcn_cidr    = "10.0.0.0/16"
 subnet_cidr = "10.0.1.0/24"
 
-# --- Compute ---
-instance_image_id = "ocid1.image.oc1.sa-vinhedo-1.aaaaaaaa..."  # ← OCID da imagem
-instance_shape    = "VM.Standard.E4.Flex"
-instance_count    = 2
+# --- Networking OKE ---
+oke_vcn_cidr            = "10.10.0.0/16"
+oke_subnet_api_cidr     = "10.10.0.0/28"
+oke_subnet_workers_cidr = "10.10.10.0/24"
+oke_subnet_lb_cidr      = "10.10.20.0/24"
+oke_subnet_pods_cidr    = "10.10.128.0/18"
+oke_subnet_db_cidr      = "10.10.30.0/24"
 
-# --- Security ---
-ingress_ports = [22, 80]
+# --- OKE ---
+oke_kubernetes_version = "v1.34.1"
+oke_node_shape         = "VM.Standard.E4.Flex"
+oke_node_count         = 2
+oke_node_image_id      = "ocid1.image.oc1..."  # ← OCID da imagem OKE
+
+# --- NoSQL, Queue (FREE) ---
+nosql_read_units  = 50
+nosql_write_units = 50
+nosql_storage_gb  = 25
 ```
 
 **Este arquivo é commitado no repo** (não é sensível).

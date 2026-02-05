@@ -12,40 +12,51 @@ Projeto demonstrativo de Infrastructure as Code usando Terraform com pipeline CI
 
 ### Recursos Provisionados
 
-**Rede (módulo `oracle-terraform-modules/vcn/oci` v3.6.0):**
-- 1x VCN
-- 1x Internet Gateway
-- 1x Route Table
+**Demo Simples (main.tf):**
+- VCN + Subnet pública + Security List
+- Instâncias Compute configuráveis
 
-**Subnet e Segurança (recursos nativos):**
-- 1x Subnet pública
-- 1x Security List (portas configuráveis via `ingress_ports`)
+**Networking OKE (networking.tf):**
+- VCN dedicada para OKE (10.10.0.0/16)
+- Subnets: API Endpoint, Workers, Load Balancer, Pods, Databases
+- Internet Gateway, NAT Gateway, Service Gateway
+- Route Tables e Security Lists específicas
 
-**Compute (módulo `oracle-terraform-modules/compute-instance/oci` v2.4.0):**
-- Instâncias configuráveis (shape e quantidade via `envs/dev.tfvars`)
-- IPs públicos atribuídos automaticamente
-- Acesso SSH configurado
+**OKE - Oracle Kubernetes Engine (oke.tf):**
+- Cluster Kubernetes gerenciado
+- Node Pool com VCN Native Pod Networking
+- Versão: v1.34.1
+
+**Serviços Adicionais:**
+- **NoSQL** (nosql.tf): Tabela equivalente ao DynamoDB (FREE)
+- **Queue** (messaging.tf): Filas equivalente ao SQS (FREE)
+- **Registry** (registry.tf): 5 repositórios OCIR (FREE)
 
 ### Diagrama
 
 ```
-┌─────────────────────────────────────────┐
-│           OCI Compartment               │
-│  ┌───────────────────────────────────┐ │
-│  │  VCN (var.vcn_cidr)               │ │
-│  │  ┌─────────────────────────────┐ │ │
-│  │  │  Internet Gateway           │ │ │
-│  │  └──────────┬──────────────────┘ │ │
-│  │  ┌──────────▼──────────────────┐ │ │
-│  │  │  Public Subnet              │ │ │
-│  │  │  (var.subnet_cidr)          │ │ │
-│  │  │  ┌──────────┐  ┌──────────┐│ │ │
-│  │  │  │Instance-0│  │Instance-1││ │ │
-│  │  │  └────┬─────┘  └────┬─────┘│ │ │
-│  │  │    Public IP     Public IP  │ │ │
-│  │  └─────────────────────────────┘ │ │
-│  └───────────────────────────────────┘ │
-└─────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                      OCI Tenancy                            │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │              VCN OKE (10.10.0.0/16)                   │  │
+│  │                                                       │  │
+│  │  ┌─────────────┐  ┌─────────────┐                    │  │
+│  │  │ API Subnet  │  │  LB Subnet  │  ← Públicas        │  │
+│  │  │ 10.10.0.0/28│  │10.10.20.0/24│                    │  │
+│  │  └─────────────┘  └─────────────┘                    │  │
+│  │                                                       │  │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌──────────────┐  │  │
+│  │  │Workers Sub  │  │  Pods Sub   │  │   DB Sub     │  │  │
+│  │  │10.10.10.0/24│  │10.10.128/18 │  │10.10.30.0/24 │  │  │
+│  │  └─────────────┘  └─────────────┘  └──────────────┘  │  │
+│  │                     ↑ Privadas                        │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                                                             │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐       │
+│  │   OKE    │ │  NoSQL   │ │  Queue   │ │ Registry │       │
+│  │Kubernetes│ │(DynamoDB)│ │  (SQS)   │ │  (ECR)   │       │
+│  └──────────┘ └──────────┘ └──────────┘ └──────────┘       │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ## 📁 Estrutura do Projeto
@@ -59,11 +70,16 @@ Projeto demonstrativo de Infrastructure as Code usando Terraform com pipeline CI
 ├── 📁 terraform/
 │   ├── backend.tf                # Backend OCI nativo + providers
 │   ├── provider.tf               # Provider OCI
-│   ├── main.tf                   # Recursos (VCN, Subnet, Compute)
+│   ├── main.tf                   # Demo simples (VCN, Subnet, Compute)
+│   ├── networking.tf             # VCN dedicada para OKE + Subnets
+│   ├── oke.tf                    # Oracle Kubernetes Engine
+│   ├── nosql.tf                  # NoSQL Database (DynamoDB)
+│   ├── messaging.tf              # Queue Service (SQS)
+│   ├── registry.tf               # Container Registry (ECR)
 │   ├── variables.tf              # Variáveis com validações
 │   ├── outputs.tf                # Outputs
 │   └── 📁 envs/
-│       └── dev.tfvars            # Configuração do ambiente dev (commitado)
+│       └── dev.tfvars            # Configuração do ambiente dev
 ├── .gitignore
 ├── README.md
 ├── HANDS-ON.md
@@ -144,17 +160,27 @@ Valores editáveis do projeto, commitados no repositório:
 project_name = "fiap-demo-oci"
 environment  = "dev"
 
-# --- Rede ---
+# --- Rede Demo ---
 vcn_cidr    = "10.0.0.0/16"
 subnet_cidr = "10.0.1.0/24"
 
-# --- Compute ---
-instance_image_id = "ocid1.image.oc1.sa-vinhedo-1.aaaaaaaa..."
-instance_shape    = "VM.Standard.E4.Flex"
-instance_count    = 2
+# --- Networking OKE ---
+oke_vcn_cidr            = "10.10.0.0/16"
+oke_subnet_api_cidr     = "10.10.0.0/28"
+oke_subnet_workers_cidr = "10.10.10.0/24"
+oke_subnet_lb_cidr      = "10.10.20.0/24"
+oke_subnet_pods_cidr    = "10.10.128.0/18"
+oke_subnet_db_cidr      = "10.10.30.0/24"
 
-# --- Security ---
-ingress_ports = [22, 80]
+# --- OKE ---
+oke_kubernetes_version = "v1.34.1"
+oke_node_shape         = "VM.Standard.E4.Flex"
+oke_node_count         = 2
+
+# --- NoSQL, Queue (FREE) ---
+nosql_read_units  = 50
+nosql_write_units = 50
+nosql_storage_gb  = 25
 ```
 
 ## 🔑 Como Obter as Credenciais OCI
