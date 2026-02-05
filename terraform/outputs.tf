@@ -1,6 +1,6 @@
 output "vcn_id" {
   description = "OCID da VCN criada"
-  value       = oci_core_vcn.vcn.id
+  value       = module.vcn.vcn_id
 }
 
 output "subnet_id" {
