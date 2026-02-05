@@ -36,14 +36,14 @@ oke_subnet_lb_cidr     = "10.10.20.0/24"     # Load Balancers (256 IPs)
 oke_subnet_pods_cidr   = "10.10.128.0/18"    # Pods VCN Native (16k IPs)
 oke_subnet_db_cidr     = "10.10.30.0/24"     # Databases/outros (256 IPs)
 
-# # --- OKE (Oracle Kubernetes Engine) ---
-# oke_kubernetes_version = "v1.34.1"
-# oke_node_shape         = "VM.Standard.E3.Flex"
-# oke_node_ocpus         = 2
-# oke_node_memory_gb     = 16
-# oke_node_count         = 2
-# oke_node_image_id      = "ocid1.image.oc1.sa-vinhedo-1.aaaaaaaa3lpk4c7vr3ezrtcfi3d7iqagmax2xxsbtg66vnc4bwiatdslqtuq"
-# oke_services_cidr      = "10.96.0.0/16"  # CIDR para Services (ClusterIP)
+# --- OKE (Oracle Kubernetes Engine) ---
+oke_kubernetes_version = "v1.34.1"
+oke_node_shape         = "VM.Standard.E3.Flex"
+oke_node_ocpus         = 2
+oke_node_memory_gb     = 16
+oke_node_count         = 2
+oke_node_image_id      = "ocid1.image.oc1.sa-vinhedo-1.aaaaaaaa3lpk4c7vr3ezrtcfi3d7iqagmax2xxsbtg66vnc4bwiatdslqtuq"
+oke_services_cidr      = "10.96.0.0/16"  # CIDR para Services (ClusterIP)
 
 # --- NoSQL (equivalente DynamoDB) ---
 nosql_read_units  = 50
