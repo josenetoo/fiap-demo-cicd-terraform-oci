@@ -117,19 +117,32 @@ cd terraform-oci-demo
 2. **Clique em:** `New repository secret`
 3. **Adicione os seguintes secrets** (um por vez):
 
+#### Secrets Obrigatórios (Credenciais OCI)
+
 | Name | Value (do seu arquivo temporário) |
 |------|-----------------------------------|
 | `OCI_TENANCY_OCID` | ocid1.tenancy.oc1..aaaaaaaa... |
 | `OCI_USER_OCID` | ocid1.user.oc1..aaaaaaaa... |
 | `OCI_FINGERPRINT` | aa:bb:cc:dd:ee:ff:... |
 | `OCI_PRIVATE_KEY` | LS0tLS1CRUdJTi... (base64) |
-| `OCI_REGION` | us-ashburn-1 |
+| `OCI_REGION` | sa-vinhedo-1 (ou us-ashburn-1) |
 | `OCI_COMPARTMENT_ID` | ocid1.compartment.oc1..aaaaaaaa... |
+
+#### Secrets de Configuração do Terraform (Novos!)
+
+| Name | Value |
+|------|-------|
+| `OCI_INSTANCE_IMAGE_ID` | OCID da imagem Oracle Linux (ver Parte 3) |
+| `OCI_SSH_PUBLIC_KEY` | Sua chave SSH pública completa |
+| `OCI_PROJECT_NAME` | `fiap-demo` |
+| `OCI_ENVIRONMENT` | `dev` |
+| `OCI_INSTANCE_COUNT` | `2` |
 
 **⚠️ IMPORTANTE:** 
 - Cole os valores EXATAMENTE como estão
 - Não adicione espaços ou quebras de linha extras
-- O `OCI_PRIVATE_KEY` deve ser a versão base64 completa
+- O `OCI_PRIVATE_KEY` deve ser a versão base64 completa (sem quebras)
+- Total: **11 secrets** devem ser configurados
 
 ### Passo 4: Configurar Environment "production"
 

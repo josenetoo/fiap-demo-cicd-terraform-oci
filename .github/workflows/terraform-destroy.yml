@@ -37,6 +37,16 @@ jobs:
           key_file=~/.oci/oci_api_key.pem
           EOF
 
+      - name: Configure AWS Credentials for Backend
+        run: |
+          mkdir -p ~/.aws
+          cat > ~/.aws/credentials << EOF
+          [default]
+          aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          EOF
+          chmod 600 ~/.aws/credentials
+
       - name: Terraform Init
         working-directory: ${{ env.WORKING_DIR }}
         run: terraform init
