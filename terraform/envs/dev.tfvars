@@ -45,13 +45,13 @@ oke_subnet_db_cidr     = "10.10.30.0/24"     # Databases/outros (256 IPs)
 # oke_node_image_id      = "ocid1.image.oc1.sa-vinhedo-1.aaaaaaaa3lpk4c7vr3ezrtcfi3d7iqagmax2xxsbtg66vnc4bwiatdslqtuq"
 # oke_services_cidr      = "10.96.0.0/16"  # CIDR para Services (ClusterIP)
 
-# # --- NoSQL (equivalente DynamoDB) ---
-# nosql_read_units  = 50
-# nosql_write_units = 50
-# nosql_storage_gb  = 25 
+# --- NoSQL (equivalente DynamoDB) ---
+nosql_read_units  = 50
+nosql_write_units = 50
+nosql_storage_gb  = 25 
 
-# # --- Queue (equivalente SQS) ---
-# queue_retention_seconds  = 345600  # 4 dias
-# queue_timeout_seconds    = 30
-# queue_visibility_seconds = 30
-# queue_dead_letter_count  = 5
+# --- Queue (equivalente SQS) ---
+queue_retention_seconds  = 345600  # 4 dias
+queue_timeout_seconds    = 30
+queue_visibility_seconds = 30
+queue_dead_letter_count  = 5

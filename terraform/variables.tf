@@ -189,50 +189,50 @@ variable "oke_subnet_db_cidr" {
 # # Nota: oke_pods_cidr não é necessário com VCN Native Pod Networking
 # # Os pods usam IPs da subnet oke_subnet_pods_cidr
 
-# # -----------------------------------------------------
-# # NOSQL - OCI NoSQL Database (equivalente DynamoDB)
-# # -----------------------------------------------------
-# variable "nosql_read_units" {
-#   description = "Unidades de leitura máximas"
-#   type        = number
-#   default     = 50
-# }
+# -----------------------------------------------------
+# NOSQL - OCI NoSQL Database (equivalente DynamoDB)
+# -----------------------------------------------------
+variable "nosql_read_units" {
+  description = "Unidades de leitura máximas"
+  type        = number
+  default     = 50
+}
 
-# variable "nosql_write_units" {
-#   description = "Unidades de escrita máximas"
-#   type        = number
-#   default     = 50
-# }
+variable "nosql_write_units" {
+  description = "Unidades de escrita máximas"
+  type        = number
+  default     = 50
+}
 
-# variable "nosql_storage_gb" {
-#   description = "Storage máximo em GB"
-#   type        = number
-#   default     = 25
-# }
+variable "nosql_storage_gb" {
+  description = "Storage máximo em GB"
+  type        = number
+  default     = 25
+}
 
-# # -----------------------------------------------------
-# # QUEUE - OCI Queue Service (equivalente SQS)
-# # -----------------------------------------------------
-# variable "queue_retention_seconds" {
-#   description = "Tempo de retenção das mensagens em segundos"
-#   type        = number
-#   default     = 345600 # 4 dias
-# }
+# -----------------------------------------------------
+# QUEUE - OCI Queue Service (equivalente SQS)
+# -----------------------------------------------------
+variable "queue_retention_seconds" {
+  description = "Tempo de retenção das mensagens em segundos"
+  type        = number
+  default     = 345600 # 4 dias
+}
 
-# variable "queue_timeout_seconds" {
-#   description = "Timeout para processamento da mensagem"
-#   type        = number
-#   default     = 30
-# }
+variable "queue_timeout_seconds" {
+  description = "Timeout para processamento da mensagem"
+  type        = number
+  default     = 30
+}
 
-# variable "queue_visibility_seconds" {
-#   description = "Tempo de visibilidade da mensagem"
-#   type        = number
-#   default     = 30
-# }
+variable "queue_visibility_seconds" {
+  description = "Tempo de visibilidade da mensagem"
+  type        = number
+  default     = 30
+}
 
-# variable "queue_dead_letter_count" {
-#   description = "Número de tentativas antes de enviar para DLQ"
-#   type        = number
-#   default     = 5
-# }
+variable "queue_dead_letter_count" {
+  description = "Número de tentativas antes de enviar para DLQ"
+  type        = number
+  default     = 5
+}
