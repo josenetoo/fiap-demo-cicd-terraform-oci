@@ -27,8 +27,8 @@ variable "compartment_id" {
   type        = string
 
   validation {
-    condition     = can(regex("^ocid1\\.compartment\\.oc1\\..", var.compartment_id))
-    error_message = "O compartment_id deve ser um OCID válido (ocid1.compartment.oc1...)."
+    condition     = can(regex("^ocid1\\.(compartment|tenancy)\\.oc1\\..", var.compartment_id))
+    error_message = "O compartment_id deve ser um OCID válido (ocid1.compartment.oc1... ou ocid1.tenancy.oc1...)."
   }
 }
 
