@@ -4,7 +4,7 @@ on:
   workflow_dispatch:  # Execução manual apenas
 
 env:
-  TF_VERSION: '1.9.8'
+  TF_VERSION: 'latest'
   WORKING_DIR: './terraform'
 
 jobs:

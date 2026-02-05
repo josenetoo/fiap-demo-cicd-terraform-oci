@@ -18,16 +18,13 @@
 # ============================================================================
 
 terraform {
-  required_version = ">= 1.9.0"
+  required_version = ">= 1.10.0"
   
   backend "oci" {
-    # Obrigatórios
     bucket    = "terraform-state-bucket"
     namespace = "ax7pefxfpuix"
     key       = "fiap-demo/terraform.tfstate"
-    
-    # Credenciais OCI (mesmas do provider)
-    region = "sa-vinhedo-1"
+    region    = "sa-vinhedo-1"
   }
 }
 
