@@ -13,15 +13,9 @@
 # ============================================================
 
 # -----------------------------------------------------
-# Data Source - Availability Domains
-# -----------------------------------------------------
-data "oci_identity_availability_domains" "ads" {
-  compartment_id = var.tenancy_ocid
-}
-
-# -----------------------------------------------------
 # VCN (Virtual Cloud Network) - Dedicada para OKE
 # -----------------------------------------------------
+# Nota: data.oci_identity_availability_domains.ads está definido no main.tf
 resource "oci_core_vcn" "oke" {
   compartment_id = var.compartment_id
   display_name   = "${var.project_name}-oke-vcn"
