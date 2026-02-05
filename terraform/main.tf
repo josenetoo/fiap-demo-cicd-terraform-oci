@@ -1,14 +1,3 @@
-terraform {
-  required_version = ">= 1.10.0"
-  
-  required_providers {
-    oci = {
-      source  = "oracle/oci"
-      version = "~> 5.0"
-    }
-  }
-}
-
 # Data source para obter availability domains
 data "oci_identity_availability_domains" "ads" {
   compartment_id = var.compartment_id
@@ -24,7 +13,7 @@ module "vcn" {
   
   vcn_name      = "${var.project_name}-vcn"
   vcn_dns_label = replace("${var.project_name}vcn", "-", "")
-  vcn_cidrs     = ["10.0.0.0/16"]
+  vcn_cidrs     = [var.vcn_cidr]
   
   create_internet_gateway = true
   create_nat_gateway      = false
@@ -35,7 +24,7 @@ module "vcn" {
 resource "oci_core_subnet" "public" {
   compartment_id    = var.compartment_id
   vcn_id            = module.vcn.vcn_id
-  cidr_block        = "10.0.1.0/24"
+  cidr_block        = var.subnet_cidr
   display_name      = "${var.project_name}-public-subnet"
   dns_label         = "public"
   route_table_id    = module.vcn.ig_route_id
@@ -55,21 +44,15 @@ resource "oci_core_default_security_list" "default" {
     protocol    = "all"
   }
 
-  ingress_security_rules {
-    protocol = "6"
-    source   = "0.0.0.0/0"
-    tcp_options {
-      min = 22
-      max = 22
-    }
-  }
-
-  ingress_security_rules {
-    protocol = "6"
-    source   = "0.0.0.0/0"
-    tcp_options {
-      min = 80
-      max = 80
+  dynamic "ingress_security_rules" {
+    for_each = var.ingress_ports
+    content {
+      protocol = "6"
+      source   = "0.0.0.0/0"
+      tcp_options {
+        min = ingress_security_rules.value
+        max = ingress_security_rules.value
+      }
     }
   }
 }
@@ -87,7 +70,7 @@ module "compute" {
   source_ocid = var.instance_image_id
   
   subnet_ocids    = [oci_core_subnet.public.id]
-  shape           = "VM.Standard.E2.1.Micro"
+  shape           = var.instance_shape
   ssh_public_keys = var.ssh_public_key
   
   assign_public_ip = true

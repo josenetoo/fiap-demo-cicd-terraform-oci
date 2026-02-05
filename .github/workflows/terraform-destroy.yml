@@ -28,7 +28,7 @@ jobs:
           echo "${{ secrets.OCI_PRIVATE_KEY }}" | base64 -d > ~/.oci/oci_api_key.pem
           chmod 600 ~/.oci/oci_api_key.pem
           
-          cat > ~/.oci/config << EOF
+          cat > ~/.oci/config << 'EOF'
           [DEFAULT]
           user=${{ secrets.OCI_USER_OCID }}
           fingerprint=${{ secrets.OCI_FINGERPRINT }}
@@ -36,6 +36,9 @@ jobs:
           region=${{ secrets.OCI_REGION }}
           key_file=~/.oci/oci_api_key.pem
           EOF
+          
+          sed -i 's/^[[:space:]]*//' ~/.oci/config
+          chmod 600 ~/.oci/config
 
       - name: Terraform Init
         working-directory: ${{ env.WORKING_DIR }}
@@ -49,12 +52,8 @@ jobs:
           TF_VAR_fingerprint: ${{ secrets.OCI_FINGERPRINT }}
           TF_VAR_region: ${{ secrets.OCI_REGION }}
           TF_VAR_compartment_id: ${{ secrets.OCI_COMPARTMENT_ID }}
-          TF_VAR_instance_image_id: ${{ secrets.OCI_INSTANCE_IMAGE_ID }}
           TF_VAR_ssh_public_key: ${{ secrets.OCI_SSH_PUBLIC_KEY }}
-          TF_VAR_project_name: ${{ secrets.OCI_PROJECT_NAME }}
-          TF_VAR_environment: ${{ secrets.OCI_ENVIRONMENT }}
-          TF_VAR_instance_count: ${{ secrets.OCI_INSTANCE_COUNT }}
-        run: terraform destroy -auto-approve
+        run: terraform destroy -var-file=envs/dev.tfvars -auto-approve
 
       - name: Notify Success
         if: success()
