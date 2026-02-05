@@ -34,6 +34,7 @@ oke_subnet_api_cidr    = "10.10.0.0/28"      # API Endpoint (pequena, /28 = 16 I
 oke_subnet_workers_cidr = "10.10.10.0/24"    # Worker Nodes (256 IPs)
 oke_subnet_lb_cidr     = "10.10.20.0/24"     # Load Balancers (256 IPs)
 oke_subnet_pods_cidr   = "10.10.128.0/18"    # Pods VCN Native (16k IPs)
+oke_subnet_db_cidr     = "10.10.30.0/24"     # Databases/outros (256 IPs)
 
 # # --- OKE (Oracle Kubernetes Engine) ---
 # oke_kubernetes_version = "v1.34.1"

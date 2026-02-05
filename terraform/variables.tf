@@ -136,6 +136,13 @@ variable "oke_subnet_pods_cidr" {
   default     = "10.10.128.0/18"
 }
 
+# Subnet para Databases e outros recursos (privada)
+variable "oke_subnet_db_cidr" {
+  description = "CIDR da subnet para Databases e outros recursos"
+  type        = string
+  default     = "10.10.30.0/24"
+}
+
 # # -----------------------------------------------------
 # # OKE - Oracle Kubernetes Engine
 # # -----------------------------------------------------

@@ -368,3 +368,69 @@ resource "oci_core_subnet" "oke_pods" {
     "Purpose"     = "OKE-Pods-VCN-Native"
   }
 }
+
+# -----------------------------------------------------
+# Security List - Databases (PostgreSQL, Redis, etc)
+# -----------------------------------------------------
+resource "oci_core_security_list" "oke_db" {
+  compartment_id = var.compartment_id
+  vcn_id         = oci_core_vcn.oke.id
+  display_name   = "${var.project_name}-oke-sl-db"
+
+  egress_security_rules {
+    destination = "0.0.0.0/0"
+    protocol    = "all"
+  }
+
+  # Tráfego interno da VCN (pods, workers)
+  ingress_security_rules {
+    protocol = "all"
+    source   = var.oke_vcn_cidr
+  }
+
+  # PostgreSQL
+  ingress_security_rules {
+    protocol = "6"
+    source   = var.oke_vcn_cidr
+    tcp_options {
+      min = 5432
+      max = 5432
+    }
+  }
+
+  # Redis
+  ingress_security_rules {
+    protocol = "6"
+    source   = var.oke_vcn_cidr
+    tcp_options {
+      min = 6379
+      max = 6379
+    }
+  }
+
+  freeform_tags = {
+    "Environment" = var.environment
+    "Project"     = var.project_name
+    "Subnet"      = "databases"
+  }
+}
+
+# -----------------------------------------------------
+# Subnet - Databases (privada)
+# -----------------------------------------------------
+resource "oci_core_subnet" "oke_db" {
+  compartment_id             = var.compartment_id
+  vcn_id                     = oci_core_vcn.oke.id
+  display_name               = "${var.project_name}-oke-subnet-db"
+  cidr_block                 = var.oke_subnet_db_cidr
+  route_table_id             = oci_core_route_table.oke_private.id
+  security_list_ids          = [oci_core_security_list.oke_db.id]
+  dns_label                  = "okedb"
+  prohibit_public_ip_on_vnic = true # DBs em subnet privada
+
+  freeform_tags = {
+    "Environment" = var.environment
+    "Project"     = var.project_name
+    "Purpose"     = "Databases"
+  }
+}
