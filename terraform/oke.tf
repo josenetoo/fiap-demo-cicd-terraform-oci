@@ -99,8 +99,10 @@ resource "oci_containerengine_node_pool" "main" {
   }
 
   node_source_details {
-    source_type = "IMAGE"
-    image_id    = var.oke_node_image_id
+    source_type             = "IMAGE"
+    # Usar imagem OKE compatível com a versão do cluster
+    image_id                = data.oci_containerengine_node_pool_option.main.sources[0].image_id
+    boot_volume_size_in_gbs = 50
   }
 
   initial_node_labels {
