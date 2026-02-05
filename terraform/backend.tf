@@ -3,6 +3,7 @@
 # ============================================================================
 #
 # Backend OCI nativo: Usa as MESMAS credenciais do provider OCI
+# - Requer Terraform >= 1.9.0
 # - Não precisa de Customer Secret Keys
 # - Não precisa de credenciais AWS
 # - Usa ~/.oci/config automaticamente
@@ -17,6 +18,8 @@
 # ============================================================================
 
 terraform {
+  required_version = ">= 1.9.0"
+  
   backend "oci" {
     # Obrigatórios
     bucket    = "terraform-state-bucket"
