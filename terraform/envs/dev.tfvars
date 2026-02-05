@@ -48,7 +48,7 @@ oke_services_cidr      = "10.96.0.0/16"  # CIDR para Services (ClusterIP)
 # --- NoSQL (equivalente DynamoDB) ---
 nosql_read_units  = 50
 nosql_write_units = 50
-nosql_storage_gb  = 25  # Free Tier: 25GB
+nosql_storage_gb  = 25 
 
 # --- Queue (equivalente SQS) ---
 queue_retention_seconds  = 345600  # 4 dias

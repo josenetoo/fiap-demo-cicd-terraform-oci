@@ -186,9 +186,8 @@ variable "oke_services_cidr" {
   type        = string
   default     = "10.96.0.0/16"
 }
-Nota: oke_pods_cidr não é necessário com VCN Native Pod Networking
-Os pods usam IPs da subnet oke_subnet_pods_cidr
-
+# Nota: oke_pods_cidr não é necessário com VCN Native Pod Networking
+# Os pods usam IPs da subnet oke_subnet_pods_cidr
 
 # -----------------------------------------------------
 # NOSQL - OCI NoSQL Database (equivalente DynamoDB)
