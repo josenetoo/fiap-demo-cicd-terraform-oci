@@ -99,140 +99,140 @@ variable "ingress_ports" {
 # # 🎯 LIVE: Descomentar as variáveis abaixo conforme necessário
 # # ============================================================
 
-# -----------------------------------------------------
-# NETWORKING - VCN para OKE (separada da VCN do main.tf)
-# -----------------------------------------------------
-variable "oke_vcn_cidr" {
-  description = "CIDR da VCN dedicada para OKE"
-  type        = string
-  default     = "10.10.0.0/16"
-}
+# # -----------------------------------------------------
+# # NETWORKING - VCN para OKE (separada da VCN do main.tf)
+# # -----------------------------------------------------
+# variable "oke_vcn_cidr" {
+#   description = "CIDR da VCN dedicada para OKE"
+#   type        = string
+#   default     = "10.10.0.0/16"
+# }
 
-# Subnet para API Endpoint do OKE (pública ou privada)
-variable "oke_subnet_api_cidr" {
-  description = "CIDR da subnet para OKE API Endpoint"
-  type        = string
-  default     = "10.10.0.0/28"
-}
+# # Subnet para API Endpoint do OKE (pública ou privada)
+# variable "oke_subnet_api_cidr" {
+#   description = "CIDR da subnet para OKE API Endpoint"
+#   type        = string
+#   default     = "10.10.0.0/28"
+# }
 
-# Subnet para Worker Nodes (privada)
-variable "oke_subnet_workers_cidr" {
-  description = "CIDR da subnet para OKE Worker Nodes"
-  type        = string
-  default     = "10.10.10.0/24"
-}
+# # Subnet para Worker Nodes (privada)
+# variable "oke_subnet_workers_cidr" {
+#   description = "CIDR da subnet para OKE Worker Nodes"
+#   type        = string
+#   default     = "10.10.10.0/24"
+# }
 
-# Subnet para Load Balancers (pública)
-variable "oke_subnet_lb_cidr" {
-  description = "CIDR da subnet para Load Balancers"
-  type        = string
-  default     = "10.10.20.0/24"
-}
+# # Subnet para Load Balancers (pública)
+# variable "oke_subnet_lb_cidr" {
+#   description = "CIDR da subnet para Load Balancers"
+#   type        = string
+#   default     = "10.10.20.0/24"
+# }
 
-# Subnet para Pods - VCN Native Pod Networking (privada, grande)
-variable "oke_subnet_pods_cidr" {
-  description = "CIDR da subnet para Pods (VCN Native IP)"
-  type        = string
-  default     = "10.10.128.0/18"
-}
+# # Subnet para Pods - VCN Native Pod Networking (privada, grande)
+# variable "oke_subnet_pods_cidr" {
+#   description = "CIDR da subnet para Pods (VCN Native IP)"
+#   type        = string
+#   default     = "10.10.128.0/18"
+# }
 
-# Subnet para Databases e outros recursos (privada)
-variable "oke_subnet_db_cidr" {
-  description = "CIDR da subnet para Databases e outros recursos"
-  type        = string
-  default     = "10.10.30.0/24"
-}
+# # Subnet para Databases e outros recursos (privada)
+# variable "oke_subnet_db_cidr" {
+#   description = "CIDR da subnet para Databases e outros recursos"
+#   type        = string
+#   default     = "10.10.30.0/24"
+# }
 
-# -----------------------------------------------------
-# OKE - Oracle Kubernetes Engine
-# -----------------------------------------------------
-variable "oke_kubernetes_version" {
-  description = "Versão do Kubernetes para o OKE"
-  type        = string
-  default     = "v1.34.1"
-}
+# # -----------------------------------------------------
+# # OKE - Oracle Kubernetes Engine
+# # -----------------------------------------------------
+# variable "oke_kubernetes_version" {
+#   description = "Versão do Kubernetes para o OKE"
+#   type        = string
+#   default     = "v1.34.1"
+# }
 
-variable "oke_node_shape" {
-  description = "Shape dos nodes do OKE"
-  type        = string
-  default     = "VM.Standard.E4.Flex"
-}
+# variable "oke_node_shape" {
+#   description = "Shape dos nodes do OKE"
+#   type        = string
+#   default     = "VM.Standard.E4.Flex"
+# }
 
-variable "oke_node_ocpus" {
-  description = "Número de OCPUs por node"
-  type        = number
-  default     = 2
-}
+# variable "oke_node_ocpus" {
+#   description = "Número de OCPUs por node"
+#   type        = number
+#   default     = 2
+# }
 
-variable "oke_node_memory_gb" {
-  description = "Memória em GB por node"
-  type        = number
-  default     = 16
-}
+# variable "oke_node_memory_gb" {
+#   description = "Memória em GB por node"
+#   type        = number
+#   default     = 16
+# }
 
-variable "oke_node_count" {
-  description = "Número de nodes no pool"
-  type        = number
-  default     = 2
-}
+# variable "oke_node_count" {
+#   description = "Número de nodes no pool"
+#   type        = number
+#   default     = 2
+# }
 
-variable "oke_node_image_id" {
-  description = "OCID da imagem para os nodes OKE"
-  type        = string
-}
+# variable "oke_node_image_id" {
+#   description = "OCID da imagem para os nodes OKE"
+#   type        = string
+# }
 
-variable "oke_services_cidr" {
-  description = "CIDR para Kubernetes Services (ClusterIP)"
-  type        = string
-  default     = "10.96.0.0/16"
-}
-# Nota: oke_pods_cidr não é necessário com VCN Native Pod Networking
-# Os pods usam IPs da subnet oke_subnet_pods_cidr
+# variable "oke_services_cidr" {
+#   description = "CIDR para Kubernetes Services (ClusterIP)"
+#   type        = string
+#   default     = "10.96.0.0/16"
+# }
+# # Nota: oke_pods_cidr não é necessário com VCN Native Pod Networking
+# # Os pods usam IPs da subnet oke_subnet_pods_cidr
 
-# -----------------------------------------------------
-# NOSQL - OCI NoSQL Database (equivalente DynamoDB)
-# -----------------------------------------------------
-variable "nosql_read_units" {
-  description = "Unidades de leitura máximas"
-  type        = number
-  default     = 50
-}
+# # -----------------------------------------------------
+# # NOSQL - OCI NoSQL Database (equivalente DynamoDB)
+# # -----------------------------------------------------
+# variable "nosql_read_units" {
+#   description = "Unidades de leitura máximas"
+#   type        = number
+#   default     = 50
+# }
 
-variable "nosql_write_units" {
-  description = "Unidades de escrita máximas"
-  type        = number
-  default     = 50
-}
+# variable "nosql_write_units" {
+#   description = "Unidades de escrita máximas"
+#   type        = number
+#   default     = 50
+# }
 
-variable "nosql_storage_gb" {
-  description = "Storage máximo em GB"
-  type        = number
-  default     = 25
-}
+# variable "nosql_storage_gb" {
+#   description = "Storage máximo em GB"
+#   type        = number
+#   default     = 25
+# }
 
-# -----------------------------------------------------
-# QUEUE - OCI Queue Service (equivalente SQS)
-# -----------------------------------------------------
-variable "queue_retention_seconds" {
-  description = "Tempo de retenção das mensagens em segundos"
-  type        = number
-  default     = 345600 # 4 dias
-}
+# # -----------------------------------------------------
+# # QUEUE - OCI Queue Service (equivalente SQS)
+# # -----------------------------------------------------
+# variable "queue_retention_seconds" {
+#   description = "Tempo de retenção das mensagens em segundos"
+#   type        = number
+#   default     = 345600 # 4 dias
+# }
 
-variable "queue_timeout_seconds" {
-  description = "Timeout para processamento da mensagem"
-  type        = number
-  default     = 30
-}
+# variable "queue_timeout_seconds" {
+#   description = "Timeout para processamento da mensagem"
+#   type        = number
+#   default     = 30
+# }
 
-variable "queue_visibility_seconds" {
-  description = "Tempo de visibilidade da mensagem"
-  type        = number
-  default     = 30
-}
+# variable "queue_visibility_seconds" {
+#   description = "Tempo de visibilidade da mensagem"
+#   type        = number
+#   default     = 30
+# }
 
-variable "queue_dead_letter_count" {
-  description = "Número de tentativas antes de enviar para DLQ"
-  type        = number
-  default     = 5
-}
+# variable "queue_dead_letter_count" {
+#   description = "Número de tentativas antes de enviar para DLQ"
+#   type        = number
+#   default     = 5
+# }
